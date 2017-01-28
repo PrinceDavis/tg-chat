@@ -32,14 +32,20 @@ io.on('connection', (socket) => {
     socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name}, has joined.`));
     callback();
   });
-  socket.on('createMessage', (newMessage, callback) => {
-    console.log('incoming message', newMessage);
-    io.emit('newMessage', generateMessage(newMessage.from, newMessage.text));
-    callback('This is from the server');
+
+  socket.on('createMessage', (message, callback) => {
+    let user = users.getUser(socket.id);
+    if (!user || !isRealString(message.text)) {
+      return callback("ummm, You have to actually say something");
+    }
+
+    io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+    callback();
   });
 
   socket.on('createLocationMessage', (coords, callback) => {
-    io.emit('newLocationMessage', generateLocationMessage('Admin', coords));
+    let user = users.getUser(socket.id);
+    io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords));
     callback('acknowledged');
   });
 

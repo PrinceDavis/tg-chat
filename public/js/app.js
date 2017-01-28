@@ -19,8 +19,6 @@ socket.on('connect', () => {
     if (err) {
       alert(err);
       window.location.href = '/';
-    }else{
-      console.log('no error');
     }
   })
 });
@@ -58,17 +56,16 @@ socket.on('updateUserlist', (users) => {
   $('#users').html(ol);
 })
 
-socket.on('disconnect', () =>  {
-  console.log('disconnected from server');
-});
 
 $('#message-form').on('submit', (e) => {
   e.preventDefault();
   let messageTextBox = $('[name=message]');
   socket.emit('createMessage', {
-    from: 'User',
     text: messageTextBox.val()
-  }, (data) => {
+  }, (err) => {
+    if (err) {
+      alert(err);
+    }
     messageTextBox.val('');
   });
 
