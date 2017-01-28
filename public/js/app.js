@@ -13,6 +13,18 @@ const scrollToBottom = () => {
   }
 };
 
+socket.on('connect', () => {
+  let params = $.deparam(window.location.search);
+  socket.emit('join', params, (err) => {
+    if (err) {
+      alert(err);
+      window.location.href = '/';
+    }else{
+      console.log('no error');
+    }
+  })
+});
+
 socket.on('newMessage', (message) =>{
   let formattedTime = moment(message.createAt).fromNow();
   let template = $('#message-template').html();
@@ -36,6 +48,15 @@ socket.on('newLocationMessage', (message) => {
   $('#messages').append(html);
   scrollToBottom();
 });
+
+socket.on('updateUserlist', (users) => {
+  let ol = $('<ol></ol>');
+  users.forEach((user) => {
+    ol.append($('<li></li>').text(user));
+  });
+
+  $('#users').html(ol);
+})
 
 socket.on('disconnect', () =>  {
   console.log('disconnected from server');
