@@ -2,6 +2,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 const http = require('http');
 const path = require('path');
+const {generateMessage} = require('./utils/message');
 
 const publicPath = path.join(__dirname, ('../public'));
 const app = express();
@@ -15,30 +16,13 @@ io.on('connection', (socket) =>{
   console.log('new user connected to the server');
 
   //welcome for admin
-  socket.emit('newMessage', {
-    from: 'admin',
-    text: 'Welcome to wechat',
-    createAt: new Date().getTime()
-  });
+  socket.emit('newMessage', generateMessage('Admin', 'Welcome to wechat'));
 
-  socket.broadcast.emit('newMessage', {
-    from: 'Admin',
-    text: 'new user Has joined',
-    createAt: new Date().getTime()
-  });
+  socket.broadcast.emit('newMessage', generateMessage('Admin', 'A user has joined'));
 
   socket.on('createMessage', (newMessage) => {
     console.log('incoming message', newMessage);
-    io.emit('newMessage', {
-      from: newMessage.from,
-      text: newMessage.text,
-      createAt: new Date().getTime()
-    });
-    // socket.broadcast.emit('newMessage', {
-    //   from: newMessage.from,
-    //   text: newMessage.text,
-    //   createAt: new Date().getTime()
-    // });
+    io.emit('newMessage', generateMessage(newMessage.from, newMessage.text));
   });
 
   socket.on('disconnect', () => {
