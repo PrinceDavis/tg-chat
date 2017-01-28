@@ -26,12 +26,13 @@ io.on('connection', (socket) =>{
     callback('This is from the server');
   });
 
-  socket.on('createLocationMessage', (coords) => {
-    io.emit('newLocationMessage', generateLocationMessage('Admin', coords))
+  socket.on('createLocationMessage', (coords, callback) => {
+    io.emit('newLocationMessage', generateLocationMessage('Admin', coords));
+    callback('acknowledged');
   });
 
   socket.on('disconnect', () => {
-    console.log('user has left');
+    socket.broadcast.emit('newMessage', generateMessage('User', 'Has left'));
   });
 });
 
