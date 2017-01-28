@@ -8,10 +8,6 @@ socket.on('newMessage', (message) =>{
 });
 
 
-socket.emit('createMessage', {
-  from: 'Ossaija ThankGod',
-  text: 'hello all i am TG'
-});
 
 socket.on('disconnect', () =>  {
   console.log('disconnected from server');
