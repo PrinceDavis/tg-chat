@@ -1,5 +1,18 @@
 let socket = io();
 
+const scrollToBottom = () => {
+  let messages = $('#messages');
+  let newMessage = messages.children('li:last-child');
+  let clientHeight = messages.prop('clientHeight');
+  let scrollTop = messages.prop('scrollTop');
+  let scrollHeight = messages.prop('scrollHeight');
+  let newMessageHeight = newMessage.innerHeight();
+  let lastMessageHeight = newMessage.prev().innerHeight();
+  if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+    messages.scrollTop(scrollHeight);
+  }
+};
+
 socket.on('newMessage', (message) =>{
   let formattedTime = moment(message.createAt).fromNow();
   let template = $('#message-template').html();
@@ -9,6 +22,7 @@ socket.on('newMessage', (message) =>{
     time: formattedTime
   });
   $('#messages').append(html);
+  scrollToBottom();
 });
 
 socket.on('newLocationMessage', (message) => {
@@ -20,6 +34,7 @@ socket.on('newLocationMessage', (message) => {
     time: formattedTime
   });
   $('#messages').append(html);
+  scrollToBottom();
 });
 
 socket.on('disconnect', () =>  {
