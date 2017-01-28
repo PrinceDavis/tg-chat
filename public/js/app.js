@@ -4,14 +4,20 @@ socket.on('connect', () => {
 });
 
 socket.on('newMessage', (message) =>{
-  console.log('message from server', message);
   let li = $('<li></li>');
   li.text(`${message.from}: ${message.text}`);
 
   $('#messages').append(li);
 });
 
-
+socket.on('newLocationMessage', (message) => {
+  let li = $('<li></li>');
+  let a = $('<a target="_blank"> My current location</a>');
+  li.text(`${message.from}`);
+  a.attr('href', message.url);
+  li.append(a);
+  $('#messages').append(li);
+});
 
 socket.on('disconnect', () =>  {
   console.log('disconnected from server');
