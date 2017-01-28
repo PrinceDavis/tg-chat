@@ -13,14 +13,22 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) =>{
   console.log('new user connected to the server');
+
+  socket.emit('newMessage', {
+    from: 'jacub',
+    text: 'Hey. What is going on',
+    createAt: 12233
+  });
+
+  socket.on('createMessage', (newMessage) => {
+    console.log('incoming message', newMessage);
+  });
+
   socket.on('disconnect', () => {
     console.log('user has left');
-  })
+  });
 });
 
-io.on('disconnect', () => {
-  console.log('user has disconnected');
-})
 
 server.listen(PORT, () =>{
   console.log(`app started on port ${PORT}`);
