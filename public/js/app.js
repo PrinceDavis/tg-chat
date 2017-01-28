@@ -5,6 +5,10 @@ socket.on('connect', () => {
 
 socket.on('newMessage', (message) =>{
   console.log('message from server', message);
+  let li = $('<li></li>');
+  li.text(`${message.from}: ${message.text}`);
+
+  $('#messages').append(li);
 });
 
 
@@ -13,9 +17,13 @@ socket.on('disconnect', () =>  {
   console.log('disconnected from server');
 });
 
-socket.emit('createMessage', {
-  from: 'Timi',
-  text: 'hi everyone'
-}, (data) => {
-  console.log(data);
-})
+$('#message-form').on('submit', (e) => {
+  e.preventDefault();
+  socket.emit('createMessage', {
+    from: 'User',
+    text: $('[name=message]').val()
+  }, (data) => {
+    console.log(data);
+  });
+  $('[name=message]').val('');
+});

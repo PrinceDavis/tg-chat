@@ -5,8 +5,15 @@
     <title>Express socket chat app</title>
   </head>
   <body>
-    <h1>Welcome to we chat</h1>
+    <p>Welcome to we chat</p>
+
+    <ol id="messages"></ol>
+    <form id="message-form">
+      <input type="text" name="message" placeholder="Enter your message">
+      <button>Send</button>
+    </form>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/libs/jquery-3.1.1.min.js"></script>
     <script src="/js/app.js"></script>
   </body>
 </html>
