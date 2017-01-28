@@ -1,24 +1,25 @@
 let socket = io();
-socket.on('connect', () => {
-  console.log('i am connect to the server');
-});
 
 socket.on('newMessage', (message) =>{
   let formattedTime = moment(message.createAt).fromNow();
-  let li = $('<li></li>');
-  li.text(`${message.from} ${formattedTime}: ${message.text}`);
-
-  $('#messages').append(li);
+  let template = $('#message-template').html();
+  let html = Mustache.render(template, {
+    from: message.from,
+    text: message.text,
+    time: formattedTime
+  });
+  $('#messages').append(html);
 });
 
 socket.on('newLocationMessage', (message) => {
   let formattedTime = moment(message.createAt).fromNow();
-  let li = $('<li></li>');
-  let a = $('<a target="_blank"> My current location</a>');
-  li.text(`${message.from} ${formattedTime}`);
-  a.attr('href', message.url);
-  li.append(a);
-  $('#messages').append(li);
+  let template = $('#location-message-template').html();
+  let html = Mustache.render(template, {
+    from: message.from,
+    url: message.url,
+    time: formattedTime
+  });
+  $('#messages').append(html);
 });
 
 socket.on('disconnect', () =>  {

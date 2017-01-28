@@ -16,7 +16,7 @@ io.on('connection', (socket) =>{
   console.log('new user connected to the server');
 
   //welcome for admin
-  socket.emit('newMessage', generateMessage('Admin', 'Welcome to wechat'));
+  socket.emit('newMessage', generateMessage('Admin', 'Welcome to NodeChat'));
 
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'A user has joined'));
 
