@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const express = require('express');
 const socketIO = require('socket.io');
 const http = require('http');
@@ -20,7 +21,7 @@ io.on('connection', (socket) => {
 
   socket.on('join', (params, callback) =>{
     if (!isRealString(params.name) || !isRealString(params.room)) {
-      return callback('Name and room name is required')
+      return callback('Name and room name is required');
     }
 
     socket.join(params.room);
