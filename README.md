@@ -8,7 +8,7 @@ A simple real-time chat app, that allow users to chat in general forum, special 
 The following component is required to set up the app on any system.
 
 * [NodeJs](https://nodejs.org/en/) version (~6.10.1)
-* [NodeReady](https://app.vagrantup.com/ossaijad/boxes/node-ready) A vagrant box with configured for developing node application.
+* [ossaijad/node-ready](https://app.vagrantup.com/ossaijad/boxes/node-ready) A vagrant box with configured for developing node application.
 * You can pull the box and run the app inside, everything from latest node, redis, mongodb, node reverse proxsy with nginx, rabbitmq etc configured and working
 
 ### Run locally ###
