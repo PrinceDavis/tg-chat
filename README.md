@@ -4,7 +4,7 @@ A simple real-time chat app, that allow users to chat in general forum, special 
 ### Visit ###
 * [Live at](https://tg-node-chat-app.herokuapp.com/)
 
-### Setup Requirement ###
+### Optional Setup Requirement ###
 The following component is required to set up the app on any system.
 
 * [NodeJs](https://nodejs.org/en/) version (~6.10.1)
